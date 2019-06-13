@@ -21,12 +21,19 @@ class IndexPage extends Component {
     this.textColorHandeler= this.textColorHandeler.bind(this)
   }
   componentDidMount(){
+   const saved= JSON.parse(window.localStorage.getItem("savedColors"))
+   this.setState({bgColor:saved.bgColor,
+  textColor:saved.textColor})
   }
   bgColorHandeler(color){
     this.setState({ bgColor: color.hex });
   }
   textColorHandeler(color){
     this.setState({ textColor: color.hex });
+  }
+  savelocal(){
+    const pics={bgColor:this.state.bgColor,textColor:this.state.textColor}
+    window.localStorage.setItem("savedColors",JSON.stringify(pics))
   }
   render() {
     return (
@@ -62,7 +69,7 @@ class IndexPage extends Component {
             <form action="https://formspree.io/l33t.ppl@gmail.com" method="POST">
               <input type="text" className="visuallyhidden" name="bg color" value={this.state.bgColor}/>
               <input type="text" className="visuallyhidden" name="text color" value={this.state.textColor}/>
-              <input type="submit" value="save"/>
+              <input type="submit" value="save" onClick={()=>this.savelocal()}/>
             </form>
           </label>
            </div>
