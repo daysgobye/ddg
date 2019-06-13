@@ -33,16 +33,15 @@ class IndexPage extends Component {
       <div>
 
         <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-        <Content>
       <div className="body" style={{background: this.state.bgColor}}>
         <div className="title">
           <h1 className="title__main" style={{color: this.state.textColor}}>Deep Desert Games</h1>
         </div>
         <div className="colorblock">
-      <button onClick={()=> this.setState({colorOpen: !this.state.colorOpen})}>change colors</button>
+      <button style={{color:this.state.textColor}} onClick={()=> this.setState({colorOpen: !this.state.colorOpen})}>{this.state.colorOpen ? "x": "change colors"}</button>
     <SlideDown className={'my-dropdown-slidedown'}>
     {this.state.colorOpen ? (
-      <div className="colorblock__main">
+      <div className="colorblock__main" style={{color:this.state.textColor}}>
 
           <label>
             Back ground color
@@ -61,7 +60,7 @@ class IndexPage extends Component {
           <label>
             save these colors
             <form action="https://formspree.io/l33t.ppl@gmail.com" method="POST">
-              <input type="text" className="dvisuallyhidden" name="bg color" value={this.state.bgColor}/>
+              <input type="text" className="visuallyhidden" name="bg color" value={this.state.bgColor}/>
               <input type="text" className="visuallyhidden" name="text color" value={this.state.textColor}/>
               <input type="submit" value="save"/>
             </form>
@@ -71,7 +70,6 @@ class IndexPage extends Component {
         </SlideDown>
         </div>
       </div>
-        </Content>
       </div>
     );
   }
