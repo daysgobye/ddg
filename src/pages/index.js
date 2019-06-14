@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "gatsby"
 import { SketchPicker } from 'react-color';
-import Toggle from 'react-toggle'
-import FontPicker from "font-picker-react";
+// import FontPicker from "font-picker-react";
 import {SlideDown} from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
 import Layout from "../components/layout/layout"
@@ -10,7 +9,6 @@ import Image from "../components/image"
 import SEO from "../components/seo"
 import Content from '../components/utility/Content/Content'
 import "../components/pagestyles/home.sass"
-import "./toggle.css"
 class IndexPage extends Component {
   constructor(props) {
     super(props);
@@ -51,8 +49,10 @@ activeFontFamily:saved.font})
     this.setState({ secondBrake:checked });
   }
   savelocal(){
+    if(typeof window !== "undefined"){
     const pics={bgColor:this.state.bgColor,textColor:this.state.textColor,fontSize:this.state.fontSize,font:this.state.activeFontFamily}
     window.localStorage.setItem("savedColors",JSON.stringify(pics))
+    }
   }
   render() {
     return (
@@ -61,7 +61,7 @@ activeFontFamily:saved.font})
         <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
       <div className="body" style={{background: this.state.bgColor}}>
         <div className="title">
-          <h1 className="apply-font" style={{color: this.state.textColor,fontSize:`${this.state.fontSize}px`}}>Deep{this.state.firstBrake ? (<br/>): ""} Desert{this.state.secondBrake ? (<br/>): ""} Games</h1>
+          <h1 className="apply-font" style={{color: this.state.textColor,fontSize:`${this.state.fontSize}px`}}>Deep{this.state.firstBreak ? (<br/>): ""} Desert{this.state.secondBrake ? (<br/>): ""} Games</h1>
         </div>
         <div className="colorblock">
       <button style={{color:this.state.textColor}} onClick={()=> this.setState({colorOpen: !this.state.colorOpen})}>{this.state.colorOpen ? "x": "change font and color"}</button>
@@ -84,7 +84,7 @@ activeFontFamily:saved.font})
            />  
         </label>
         <label>
-          font
+          {/* font
           <FontPicker
           apiKey="AIzaSyCl_dsFh-W92B-JNqfjKfo0ZHUSJ7roDNo"
           activeFontFamily={this.state.activeFontFamily}
@@ -93,7 +93,7 @@ activeFontFamily:saved.font})
               activeFontFamily: nextFont.family,
             })
           }
-        />
+        /> */}
         <label>
           font size (in px) 
           <input type="text" value={this.state.fontSize} onChange={(e)=>this.setState({fontSize:e.target.value})}/>
@@ -112,7 +112,7 @@ activeFontFamily:saved.font})
               <input type="text" className="visuallyhidden" name="bg color" value={this.state.bgColor}/>
               <input type="text" className="visuallyhidden" name="text color" value={this.state.textColor}/>
               <input type="text" className="visuallyhidden" name="font size" value={this.state.fontSize}/>
-              <input type="text" className="visuallyhidden" name="font" value={this.state.activeFontFamily}/>
+              {/* <input type="text" className="visuallyhidden" name="font" value={this.state.activeFontFamily}/> */}
 
               <input type="submit" value="save" onClick={()=>this.savelocal()}/>
             </form>
