@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "gatsby"
 import { SketchPicker } from 'react-color';
+import Toggle from 'react-toggle'
 import FontPicker from "font-picker-react";
 import {SlideDown} from 'react-slidedown'
 import 'react-slidedown/lib/slidedown.css'
@@ -9,6 +10,7 @@ import Image from "../components/image"
 import SEO from "../components/seo"
 import Content from '../components/utility/Content/Content'
 import "../components/pagestyles/home.sass"
+import "./toggle.css"
 class IndexPage extends Component {
   constructor(props) {
     super(props);
@@ -17,11 +19,15 @@ class IndexPage extends Component {
       textColor: "ffff",
       colorOpen:false,
       activeFontFamily: "Open Sans",
-      fontSize:""
+      fontSize:"100",
+      firstBreak: true,
+      secondBrake: true
 
     }
     this.bgColorHandeler= this.bgColorHandeler.bind(this)
     this.textColorHandeler= this.textColorHandeler.bind(this)
+    this.firstCheckHandler =this.firstCheckHandler.bind(this)
+    this.secondCheckHandler=this.secondCheckHandler.bind(this)
   }
   componentDidMount(){
    const saved= JSON.parse(window.localStorage.getItem("savedColors"))
@@ -36,6 +42,14 @@ activeFontFamily:saved.font})
   textColorHandeler(color){
     this.setState({ textColor: color.hex });
   }
+  firstCheckHandler(checked){
+    this.setState({ firstBrake:checked.bubbles});
+    console.log(checked);
+    
+  }
+  secondCheckHandler(checked){
+    this.setState({ secondBrake:checked });
+  }
   savelocal(){
     const pics={bgColor:this.state.bgColor,textColor:this.state.textColor,fontSize:this.state.fontSize,font:this.state.activeFontFamily}
     window.localStorage.setItem("savedColors",JSON.stringify(pics))
@@ -47,7 +61,7 @@ activeFontFamily:saved.font})
         <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
       <div className="body" style={{background: this.state.bgColor}}>
         <div className="title">
-          <h1 className="apply-font" style={{color: this.state.textColor,fontSize:`${this.state.fontSize}px`}}>Deep Desert Games</h1>
+          <h1 className="apply-font" style={{color: this.state.textColor,fontSize:`${this.state.fontSize}px`}}>Deep{this.state.firstBrake ? (<br/>): ""} Desert{this.state.secondBrake ? (<br/>): ""} Games</h1>
         </div>
         <div className="colorblock">
       <button style={{color:this.state.textColor}} onClick={()=> this.setState({colorOpen: !this.state.colorOpen})}>{this.state.colorOpen ? "x": "change font and color"}</button>
@@ -84,6 +98,13 @@ activeFontFamily:saved.font})
           font size (in px) 
           <input type="text" value={this.state.fontSize} onChange={(e)=>this.setState({fontSize:e.target.value})}/>
         </label>
+        {/* <label className="colorblock__main__toggles">
+          stacking text
+          <div>
+          <Toggle onChange={this.firstCheckHandler} defaultChecked={this.state.firstBreak} />            
+          <Toggle onChange={this.secondCheckHandler} defaultChecked={this.state.secondBreak} />            
+          </div>
+        </label> */}
         </label>
           <label>
             save these colors
